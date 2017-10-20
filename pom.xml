@@ -38,15 +38,9 @@
     </description>
 
     <scm>
-        <connection>
-            scm:svn:http://svn.apache.org/repos/asf/sling/trunk/bundles/commons/threaddump
-        </connection>
-        <developerConnection>
-            scm:svn:https://svn.apache.org/repos/asf/sling/trunk/bundles/commons/threaddump
-        </developerConnection>
-        <url>
-            http://svn.apache.org/viewvc/sling/trunk/bundles/commons/threaddump
-        </url>
+        <connection>scm:git:https://gitbox.apache.org/repos/asf/sling-org-apache-sling-commons-threaddump.git</conncetion>
+        <developerConnection>scm:git:https://gitbox.apache.org/repos/asf/sling-org-apache-sling-commons-threaddump.git</developerConnection>
+        <url>https://gitbox.apache.org/repos/asf?p=sling-org-apache-sling-commons-threaddump.git</url>
     </scm>
 
     <build>
