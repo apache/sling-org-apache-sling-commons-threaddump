@@ -31,6 +31,9 @@ import org.osgi.framework.ServiceRegistration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import org.osgi.annotation.bundle.Header;
+
+@Header(name = Constants.BUNDLE_ACTIVATOR, value = "${@class}")
 public class Activator implements BundleActivator, UncaughtExceptionHandler {
 
     private static final String LOG_NAME = "org.apache.sling.commons.threaddump.internal.UncaughtExceptionHandler";
