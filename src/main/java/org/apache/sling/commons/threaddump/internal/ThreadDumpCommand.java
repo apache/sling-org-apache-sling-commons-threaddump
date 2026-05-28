@@ -88,5 +88,4 @@ public class ThreadDumpCommand extends BaseThreadDumper implements Command {
         err.println("No such Thread: " + threadId);
         err.flush();
     }
-
 }

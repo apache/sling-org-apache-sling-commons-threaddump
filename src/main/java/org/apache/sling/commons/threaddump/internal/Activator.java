@@ -22,6 +22,7 @@ import java.lang.Thread.UncaughtExceptionHandler;
 import java.util.Dictionary;
 import java.util.Hashtable;
 
+import org.osgi.annotation.bundle.Header;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
@@ -30,8 +31,6 @@ import org.osgi.framework.ServiceFactory;
 import org.osgi.framework.ServiceRegistration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import org.osgi.annotation.bundle.Header;
 
 @Header(name = Constants.BUNDLE_ACTIVATOR, value = "${@class}")
 public class Activator implements BundleActivator, UncaughtExceptionHandler {
@@ -50,21 +49,21 @@ public class Activator implements BundleActivator, UncaughtExceptionHandler {
         Thread.setDefaultUncaughtExceptionHandler(this);
 
         // install thread handler shell command
-        register(bundleContext,
-            new String[] { "org.apache.felix.shell.Command" },
-            new ServiceFactory() {
+        register(
+                bundleContext,
+                new String[] {"org.apache.felix.shell.Command"},
+                new ServiceFactory() {
 
-                public void ungetService(final Bundle bundle,
-                    final ServiceRegistration reg,
-                    final Object consoleObject) {
-                    // nothing to do
-                }
+                    public void ungetService(
+                            final Bundle bundle, final ServiceRegistration reg, final Object consoleObject) {
+                        // nothing to do
+                    }
 
-                public Object getService(final Bundle bundle,
-                    final ServiceRegistration reg) {
-                     return new ThreadDumpCommand();
-                }
-            }, null);
+                    public Object getService(final Bundle bundle, final ServiceRegistration reg) {
+                        return new ThreadDumpCommand();
+                    }
+                },
+                null);
 
         // install Web Console configuration printer
         final Dictionary<String, Object> props = new Hashtable<String, Object>();
@@ -74,25 +73,23 @@ public class Activator implements BundleActivator, UncaughtExceptionHandler {
 
         final ThreadDumperPanel tdp = new ThreadDumperPanel();
 
-        register(bundleContext, new String[] {
-            tdp.getClass().getName() }, tdp, props);
+        register(bundleContext, new String[] {tdp.getClass().getName()}, tdp, props);
     }
 
     public void stop(BundleContext bundleContext) {
         Thread.setDefaultUncaughtExceptionHandler(oldHandler);
     }
 
-    private void register(final BundleContext context,
+    private void register(
+            final BundleContext context,
             final String[] serviceNames,
             final Object service,
             final Dictionary<String, Object> properties) {
 
-        final Dictionary<String, Object> props =
-                (properties == null ? new Hashtable<String, Object>() : properties);
+        final Dictionary<String, Object> props = (properties == null ? new Hashtable<String, Object>() : properties);
 
         // default settings
-        props.put(Constants.SERVICE_DESCRIPTION, "Thread Dumper ("
-            + serviceNames[0] + ")");
+        props.put(Constants.SERVICE_DESCRIPTION, "Thread Dumper (" + serviceNames[0] + ")");
         props.put(Constants.SERVICE_VENDOR, "Apache Software Foundation");
 
         context.registerService(serviceNames, service, props);
@@ -121,5 +118,4 @@ public class Activator implements BundleActivator, UncaughtExceptionHandler {
             oldHandler.uncaughtException(t, e);
         }
     }
-
 }
